@@ -88,8 +88,13 @@ $("#searchForm").submit(function(){
     $("#previous").addClass("hidden");
     searchValue = $('#search').val();
     reddit.hot(searchValue).limit(50).fetch(function(res){
-        if(res!=null){
+        if(res!=null && res.message!="Not Found"){
             displayImages(res.data.children);
+        }
+        if(res.message=="Not Found"){
+            $("#page").addClass("hidden")
+            $("#image-container").append(
+            "<h1 class =\"text-center\">Your search did not match any images </h1>");
         }
     },function(err){
         $("#page").addClass("hidden")
