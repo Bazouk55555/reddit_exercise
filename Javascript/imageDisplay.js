@@ -1,9 +1,17 @@
+//The first image of the whole search
 var first_of_all_images;
+
+//The first image of the page
 var first_image;
+
+//The last image of the page
 var last_image;
+
+//The search value typed
 var search_value;
 
-function outer (k, element_image, images, array_j)
+//Hovering the mouse on each picture displays the post title of the picture
+function addListenerForAllTheImages(k, element_image, images, array_j)
 {
     element_image.addEventListener('mousemove', function(e) {
         x = e.clientX+"px";
@@ -18,6 +26,8 @@ function outer (k, element_image, images, array_j)
         $("#source_web").empty();
     });
 }
+
+//Display 12 images on the page
 function displayImages(images)
 {
     $("#page").removeClass("hidden")
@@ -61,17 +71,17 @@ function displayImages(images)
     $("#image-container").append("<div id=\"source_web\"></div>")
     var x;
     var y;
-    var title;
     for(var k=0;k<12;k++)
     {
         id_image="image_"+k;
         element_image=document.getElementById(id_image);
-        outer(k,element_image,images,array_j);
+        addListenerForAllTheImages(k,element_image,images,array_j);
     }
     first_image=images[0].data.name;
     last_image=images[j-1].data.name;
 }
 
+//Search for the 12 hottest images on reddit when submitting the research
 $("#searchForm").submit(function(){
     $("#image-container").empty();
     $("#previous").addClass("hidden");
@@ -90,6 +100,7 @@ $("#searchForm").submit(function(){
     return false;
 });
 
+//Display the 12 next images
 $("#next").click(function() {
         $("#image-container").empty();
         $("#page").removeClass("hidden");
@@ -99,6 +110,7 @@ $("#next").click(function() {
     });
 });
 
+//Display the 12 previous images
 $("#previous").click(function() {
         $("#image-container").empty();
         $("#page").removeClass("hidden");
