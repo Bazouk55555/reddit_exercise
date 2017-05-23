@@ -14,8 +14,9 @@ var search_value;
 function addListenerForAllTheImages(k, element_image, images, array_j)
 {
     element_image.addEventListener('mousemove', function(e) {
-        x = e.clientX+"px";
-        y = e.clientY+(document.body.scrollTop || document.documentElement.scrollTop)+"px";
+        var offset = $("#image-container").offset();
+        x = e.clientX-offset.left+20+"px";
+        y = e.clientY+(document.body.scrollTop || document.documentElement.scrollTop)+20+"px";
         $("#source_web").empty();
         $("#source_web").append("<div id=\"source_web\">"+images[array_j[k]].data.title+"</div>");
         $("#source_web").css("left",x);
@@ -87,7 +88,6 @@ $("#searchForm").submit(function(){
     $("#previous").addClass("hidden");
     searchValue = $('#search').val();
     reddit.hot(searchValue).limit(50).fetch(function(res){
-        console.log(res);
         if(res!=null){
             displayImages(res.data.children);
         }
