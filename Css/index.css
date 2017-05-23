@@ -1,0 +1,30 @@
+#image-container
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.image-row
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.image{
+    border: 10px black solid;
+    width:200px;
+    height:200px;
+    margin: 5px;
+}
+
+#searchForm{
+    width: 50%;
+    margin: 5px;
+}
+
+#source_web{
+    position:absolute;
+}
+
+
+
