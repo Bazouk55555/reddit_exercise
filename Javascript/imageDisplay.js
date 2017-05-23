@@ -3,6 +3,21 @@ var first_image;
 var last_image;
 var search_value;
 
+function outer (k, element_image, images, array_j)
+{
+    element_image.addEventListener('mousemove', function(e) {
+        x = e.clientX+"px";
+        y = e.clientY+(document.body.scrollTop || document.documentElement.scrollTop)+"px";
+        $("#source_web").empty();
+        $("#source_web").append("<div id=\"source_web\">"+images[array_j[k]].data.title+"</div>");
+        $("#source_web").css("left",x);
+        $("#source_web").css("top",y);
+    });
+
+    element_image.addEventListener('mouseout', function(e) {
+        $("#source_web").empty();
+    });
+}
 function displayImages(images)
 {
     $("#page").removeClass("hidden")
@@ -13,7 +28,6 @@ function displayImages(images)
     var id_image;
     var element_image;
     images.forEach(function(subr){
-        //console.log(subr);
         if(i<12 ){
             if(subr.data.thumbnail_height!=null){
     	        var postLink = "http://reddit.com"+subr.data.permalink;
@@ -48,45 +62,11 @@ function displayImages(images)
     var x;
     var y;
     var title;
-    //console.log(array_j);
-    /*element_image=document.getElementById("image_0");
-        element_image.addEventListener('mousemove', function(e) {
-            x = e.clientX+"px";
-            y = e.clientY+"px";
-            $("#source_web").empty();
-            $("#source_web").append("<div id=\"source_web\">"+images[array_j[0]].data.title+"</div>");
-            $("#source_web").css("left",x);
-            $("#source_web").css("top",y);
-            $("#source_web").css("color","blue");
-        });
-    element_image=document.getElementById("image_1");
-        element_image.addEventListener('mousemove', function(e) {
-            x = e.clientX+"px";
-            y = e.clientY+"px";
-            $("#source_web").empty();
-            $("#source_web").append("<div id=\"source_web\">"+images[array_j[1]].data.title+"</div>");
-            $("#source_web").css("left",x);
-            $("#source_web").css("top",y);
-            $("#source_web").css("color","blue");
-        });*/
-    console.log(images.length);
-    for(var k=0;k<5;k++)
+    for(var k=0;k<12;k++)
     {
-        console.log("k:"+k);
         id_image="image_"+k;
-        console.log(id_image);
-        console.log(array_j[k]);
         element_image=document.getElementById(id_image);
-        element_image.addEventListener('mousemove', function(e) {
-            x = e.clientX+"px";
-            y = e.clientY+"px";
-            $("#source_web").empty();
-            console.log(images[array_j[k]].data.title);
-            $("#source_web").append("<div id=\"source_web\">"+images[array_j[k]].data.title+"</div>");
-            $("#source_web").css("left",x);
-            $("#source_web").css("top",y);
-            $("#source_web").css("color","blue");
-        });
+        outer(k,element_image,images,array_j);
     }
     first_image=images[0].data.name;
     last_image=images[j-1].data.name;
@@ -97,7 +77,10 @@ $("#searchForm").submit(function(){
     $("#previous").addClass("hidden");
     searchValue = $('#search').val();
     reddit.hot(searchValue).limit(50).fetch(function(res){
-        displayImages(res.data.children);
+        console.log(res);
+        if(res!=null){
+            displayImages(res.data.children);
+        }
     },function(err){
         $("#page").addClass("hidden")
         $("#image-container").append(
